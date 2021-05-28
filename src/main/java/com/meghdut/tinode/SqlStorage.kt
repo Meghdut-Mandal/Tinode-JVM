@@ -8,11 +8,19 @@ import co.tinode.tinodesdk.model.Drafty
 import co.tinode.tinodesdk.model.MsgRange
 import co.tinode.tinodesdk.model.MsgServerData
 import co.tinode.tinodesdk.model.Subscription
+import org.ktorm.database.Database
+import org.ktorm.support.sqlite.SQLiteDialect
 import java.io.Closeable
 import java.util.*
 
-class SqlStorage : Storage {
+class SqlStorage(val dbFileName: String) : Storage {
+
+    val db = Database.connect("jdbc:sqlite:$dbFileName", dialect = SQLiteDialect())
+
+
+
     override fun getMyUid(): String {
+
         TODO("Not yet implemented")
     }
 
