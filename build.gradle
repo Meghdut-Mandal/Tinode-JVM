@@ -25,6 +25,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.ktorm/ktorm-support-sqlite
     implementation group: 'org.ktorm', name: 'ktorm-support-sqlite', version: '3.4.1'
 
+    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.34.0'
+
     //noinspection GradleDependency: 1.5.0 requires Android API 24.
     api 'org.java-websocket:Java-WebSocket:1.4.1'
 
