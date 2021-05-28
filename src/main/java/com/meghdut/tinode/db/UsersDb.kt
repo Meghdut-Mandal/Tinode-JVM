@@ -1,5 +1,31 @@
 package com.meghdut.tinode.db
 
+import org.ktorm.entity.Entity
+import org.ktorm.schema.Table
+import org.ktorm.schema.int
+import org.ktorm.schema.varchar
+
+interface User : Entity<User> {
+    companion object : Entity.Factory<User>()
+
+    val id: Int
+    val account_id: String
+    val uid: String
+    val updated: Int
+    val deleted: Int
+    val pub: String
+}
+
+object Users : Table<User>("users") {
+    val id = int("id").primaryKey().bindTo { it.id }
+    val account_id = varchar("account_id").bindTo { it.account_id }
+    val uid = varchar("uid").bindTo { it.uid }
+    val updated = int("updated").bindTo { it.updated }
+    val deleted = int("deleted").bindTo { it.deleted }
+    val pub = varchar("pub").bindTo { it.pub }
+}
+
+
 object UsersDb {
     /**
      * The name of the main table.

@@ -1,5 +1,43 @@
 package com.meghdut.tinode.db
 
+import org.ktorm.entity.Entity
+import org.ktorm.schema.Table
+import org.ktorm.schema.int
+import org.ktorm.schema.varchar
+
+interface Subscription : Entity<Subscription> {
+    companion object : Entity.Factory<Subscription>()
+
+    val id : Int
+    val topic_id : String
+    val user_id : String
+    val status : Int
+    val mode : String
+    val updated : Int
+    val deleted : Int
+    val read : Int
+    val recv : Int
+    val clear : Int
+    val last_seen : Int
+    val user_agent : String
+}
+object Subscriptions : Table<Subscription>("subscriptions") {
+    val id = int("id").primaryKey().bindTo{ it.id }
+    val topic_id = varchar("topic_id").bindTo{ it.topic_id }
+    val user_id = varchar("user_id").bindTo{ it.user_id }
+    val status = int("status").bindTo{ it.status }
+    val mode = varchar("mode").bindTo{ it.mode }
+    val updated = int("updated").bindTo{ it.updated }
+    val deleted = int("deleted").bindTo{ it.deleted }
+    val read = int("read").bindTo{ it.read }
+    val recv = int("recv").bindTo{ it.recv }
+    val clear = int("clear").bindTo{ it.clear }
+    val last_seen = int("last_seen").bindTo{ it.last_seen }
+    val user_agent = varchar("user_agent").bindTo{ it.user_agent }
+}
+
+
+
 object SubscribersDb {
     /**
      * The name of the table.

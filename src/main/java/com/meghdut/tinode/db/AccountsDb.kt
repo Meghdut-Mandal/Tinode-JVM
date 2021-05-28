@@ -5,24 +5,21 @@ import org.ktorm.schema.Table
 import org.ktorm.schema.int
 import org.ktorm.schema.varchar
 
-
 interface Account : Entity<Account> {
     companion object : Entity.Factory<Account>()
-    val id: Int
-    val uid: String
-    val last_active: Int
-    val cred_methods: String
-    val device_id: String
+    val id : Int
+    val uid : String
+    val last_active : Int
+    val cred_methods : String
+    val device_id : String
 }
-
-object Accounts : Table<Account>(AccountsDb.TABLE_NAME) {
-    val id = int(AccountsDb.COLUMN_NAME_UID).primaryKey().bindTo { it.id }
-    val uid = varchar(AccountsDb.COLUMN_NAME_UID).bindTo { it.uid }
-    val last_active = int(AccountsDb.COLUMN_NAME_ACTIVE).bindTo { it.last_active }
-    val cred_methods = varchar(AccountsDb.COLUMN_NAME_CRED_METHODS).bindTo { it.cred_methods }
-    val device_id = varchar(AccountsDb.COLUMN_NAME_DEVICE_ID).bindTo { it.device_id }
+object Accounts : Table<Account>("accounts") {
+    val id = int("id").primaryKey().bindTo{ it.id }
+    val uid = varchar("uid").bindTo{ it.uid }
+    val last_active = int("last_active").bindTo{ it.last_active }
+    val cred_methods = varchar("cred_methods").bindTo{ it.cred_methods }
+    val device_id = varchar("device_id").bindTo{ it.device_id }
 }
-
 
 object AccountsDb {
 
