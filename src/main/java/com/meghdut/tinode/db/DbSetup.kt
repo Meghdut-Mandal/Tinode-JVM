@@ -4,7 +4,7 @@ import org.ktorm.database.Database
 import java.sql.Connection
 
 var _COUNT = "_count"
-var _ID = "_id"
+var _ID = "id"
 
 fun Database.setupDb() {
     useConnection {
