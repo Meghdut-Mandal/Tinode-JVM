@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.0'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    api 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    api 'com.fasterxml.jackson.core:jackson-core:2.12.3'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
+    // https://mvnrepository.com/artifact/co.trikita/log
+    implementation group: 'co.trikita', name: 'log', version: '1.1.5'
+
+    //noinspection GradleDependency: 1.5.0 requires Android API 24.
+    api 'org.java-websocket:Java-WebSocket:1.4.1'
+
+}
+
