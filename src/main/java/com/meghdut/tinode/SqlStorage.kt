@@ -8,15 +8,22 @@ import co.tinode.tinodesdk.model.Drafty
 import co.tinode.tinodesdk.model.MsgRange
 import co.tinode.tinodesdk.model.MsgServerData
 import co.tinode.tinodesdk.model.Subscription
+import com.meghdut.tinode.db.setupDb
 import org.ktorm.database.Database
 import org.ktorm.support.sqlite.SQLiteDialect
 import java.io.Closeable
+import java.io.File
 import java.util.*
 
 class SqlStorage(val dbFileName: String) : Storage {
 
-    val db = Database.connect("jdbc:sqlite:$dbFileName", dialect = SQLiteDialect())
+    private val db: Database = Database.connect("jdbc:sqlite:$dbFileName", dialect = SQLiteDialect())
 
+    init {
+        if (!File(dbFileName).exists()) {
+            db.setupDb()
+        }
+    }
 
 
     override fun getMyUid(): String {
