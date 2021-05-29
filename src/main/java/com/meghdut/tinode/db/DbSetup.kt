@@ -75,7 +75,7 @@ fun codeGen(tble: Tble) {
     val objectsName = entityName + "s"
     val clms = tble.fields
     val entityRows = clms.map {
-        """  val ${it.name} : ${if (it.type == Types.INTEGER) "Int" else "String"}   """
+        """  var ${it.name} : ${if (it.type == Types.INTEGER) "Int" else "String"}   """
     }.joinToString(separator = "\n")
     val objectRows= clms.map {
        val tbaleType=  if (it.type == Types.INTEGER) "int" else "varchar"

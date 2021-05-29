@@ -25,7 +25,6 @@ var Account.credMethods: List<String>
     }
 
 object Accounts : Table<Account>("accounts") {
-
     val id = int("id").primaryKey().bindTo { it.id }
     val uid = varchar("uid").bindTo { it.uid }
     val last_active = int("last_active").bindTo { it.last_active }

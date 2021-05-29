@@ -7,30 +7,29 @@ import org.ktorm.schema.varchar
 
 interface Message : Entity<Message> {
     companion object : Entity.Factory<Message>()
-
-    val id: Int
-    val topic_id: String
-    val user_id: String
-    val status: Int
-    val sender: String
-    val ts: Int
-    val seq: Int
-    val high: Int
-    val del_id: Int
-    val head: String
-    val content: String
+    var id: Int
+    var topicId: String
+    var userId: String
+    var status: Int
+    var sender: String
+    var ts: Int
+    var seq: Int
+    var high: Int
+    var delId: Int
+    var head: String
+    var content: String
 }
 
 object Messages : Table<Message>("messages") {
     val id = int("id").primaryKey().bindTo { it.id }
-    val topic_id = varchar("topic_id").bindTo { it.topic_id }
-    val user_id = varchar("user_id").bindTo { it.user_id }
+    val topic_id = varchar("topic_id").bindTo { it.topicId }
+    val user_id = varchar("user_id").bindTo { it.userId }
     val status = int("status").bindTo { it.status }
     val sender = varchar("sender").bindTo { it.sender }
     val ts = int("ts").bindTo { it.ts }
     val seq = int("seq").bindTo { it.seq }
     val high = int("high").bindTo { it.high }
-    val del_id = int("del_id").bindTo { it.del_id }
+    val del_id = int("del_id").bindTo { it.delId }
     val head = varchar("head").bindTo { it.head }
     val content = varchar("content").bindTo { it.content }
 }
