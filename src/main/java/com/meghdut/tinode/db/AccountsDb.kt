@@ -1,25 +1,86 @@
 package com.meghdut.tinode.db
 
-import org.ktorm.entity.Entity
+import org.ktorm.database.Database
+import org.ktorm.dsl.delete
+import org.ktorm.dsl.eq
+import org.ktorm.entity.*
 import org.ktorm.schema.Table
 import org.ktorm.schema.int
 import org.ktorm.schema.varchar
 
 interface Account : Entity<Account> {
     companion object : Entity.Factory<Account>()
-    val id : Int
-    val uid : String
-    val last_active : Int
-    val cred_methods : String
-    val device_id : String
+
+    val id: Int
+    var uid: String
+    var last_active: Int
+    var cred_methods: String
+    var device_id: String
 }
+
+var Account.credMethods: List<String>
+    get() = cred_methods.split(",")
+    set(value) {
+        cred_methods = value.joinToString(",")
+    }
+
 object Accounts : Table<Account>("accounts") {
-    val id = int("id").primaryKey().bindTo{ it.id }
-    val uid = varchar("uid").bindTo{ it.uid }
-    val last_active = int("last_active").bindTo{ it.last_active }
-    val cred_methods = varchar("cred_methods").bindTo{ it.cred_methods }
-    val device_id = varchar("device_id").bindTo{ it.device_id }
+
+    val id = int("id").primaryKey().bindTo { it.id }
+    val uid = varchar("uid").bindTo { it.uid }
+    val last_active = int("last_active").bindTo { it.last_active }
+    val cred_methods = varchar("cred_methods").bindTo { it.cred_methods }
+    val device_id = varchar("device_id").bindTo { it.device_id }
 }
+
+val Database.accounts get() = this.sequenceOf(Accounts)
+
+
+fun Database.getDeviceToken(): String {
+    return accounts.find { it.last_active eq 1 }?.device_id ?: ""
+}
+
+fun Database.setDeviceToken(token: String) {
+    val account = accounts.find { it.last_active eq 1 } ?: return
+    account.device_id = token
+    account.flushChanges()
+}
+
+fun Database.deactivateAll() {
+    accounts.forEach {
+        it.last_active = 0
+        it.flushChanges()
+    }
+}
+
+fun Database.getByUid(uid: String): Account? {
+    return accounts.find { it.uid eq uid }
+}
+
+fun Database.getActiveAccount(): Account? {
+    return accounts.find { it.last_active eq 1 }
+}
+
+fun Database.deleteAccount(id: Int) {
+    delete(Accounts) { it.id eq id }
+}
+
+fun Database.addOrActiveAccount(uid: String, methods: List<String>) {
+    val foundAccount = getByUid(uid)
+    deactivateAll()
+    if (foundAccount != null) {
+        foundAccount.last_active = 1
+        foundAccount.flushChanges()
+    } else {
+        val account = Account {
+            this.uid = uid
+            this.credMethods = methods
+            this.last_active = 1
+        }
+        accounts.add(account)
+    }
+}
+
 
 object AccountsDb {
 

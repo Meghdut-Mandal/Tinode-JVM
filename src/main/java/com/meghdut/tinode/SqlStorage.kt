@@ -8,6 +8,7 @@ import co.tinode.tinodesdk.model.Drafty
 import co.tinode.tinodesdk.model.MsgRange
 import co.tinode.tinodesdk.model.MsgServerData
 import co.tinode.tinodesdk.model.Subscription
+import com.meghdut.tinode.db.Accounts
 import com.meghdut.tinode.db.setupDb
 import org.ktorm.database.Database
 import org.ktorm.support.sqlite.SQLiteDialect
@@ -44,11 +45,11 @@ class SqlStorage(val dbFileName: String) : Storage {
     }
 
     override fun getDeviceToken(): String {
-        TODO("Not yet implemented")
+        return Accounts.getDeviceToken()
     }
 
     override fun saveDeviceToken(token: String?) {
-        TODO("Not yet implemented")
+        Accounts.setDeviceToken(token)
     }
 
     override fun logout() {
